@@ -1,0 +1,13 @@
+SENSITIVE_PATTERNS='(AWS_SECRET_ACCESS_KEY|API_KEY|PRIVATE_KEY|PASSWORD|TOKEN|SECRET|POSTGRES_PASSWORD|DATABASE_URL)'
+
+if [ -z "$FILES_TO_CHECK" ]; then
+    exit 0
+fi
+
+if git diff --cached $FILES_TO_CHECK | grep -E "$SENSITIVE_PATTERNS"; then
+    echo "🚨 ERROR: A sensitive key was detected in the files you are trying to commit!"
+    echo "🛑 Commit has been blocked. Remove the credentials before proceeding."
+    exit 1
+fi
+
+exit 0
