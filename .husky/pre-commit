@@ -1,0 +1,17 @@
+
+SENSITIVE_PATTERNS='(AWS_SECRET_ACCESS_KEY|API_KEY|PRIVATE_KEY|PASSWORD|TOKEN|SECRET|POSTGRES_PASSWORD|DATABASE_URL)'
+
+git diff --cached --name-only | grep -E '\.env$|\.json$|\.yml$|\.yaml$|\.js$|\.ts$|\.py$|\.sh$' | while read file; do
+    if [[ "$file" == ".husky/pre-commit" ]]; then
+        continue
+    fi
+    
+    echo "🔍 Verificando credenciais no arquivo: $file"
+    if git diff --cached "$file" | grep -E "$SENSITIVE_PATTERNS"; then
+        echo "🚨 ERROR: A sensitive key was detected in the file: $file"
+        echo "🛑 Commit has been blocked. Remove the credentials before proceeding."
+        exit 1
+    fi
+done
+
+exit 0
