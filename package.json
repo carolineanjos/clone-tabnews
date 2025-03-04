@@ -4,7 +4,9 @@
   "description": "Projeto do Curso de Programação Filipe Deschamps",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
+    "predev": "npm run services:up && npm run services:wait:database && npm run migrations:up",
+    "dev": "./scripts/dev.sh",
+    "postdev": "npm run services:stop",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "posttest": "npm run services:stop",
     "test:watch": "jest --watchAll --runInBand",
