@@ -21,9 +21,9 @@ function GetDatabaseInfo() {
   });
   const dbDependencies = data?.dependencies.database;
   let updatedAtText = "Carregando...";
-  let maxConnections;
-  let dbVersion;
-  let openedConnections;
+  let maxConnections = "Carregando...";
+  let dbVersion = "Carregando...";
+  let openedConnections = "Carregando...";
 
   if (!isLoading && data) {
     updatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
